@@ -10,5 +10,6 @@
 
 void printDino(int* dino, int ox, int oy);
 void printCacto(int* cacto, int ox);
+void apagaCacto(int* cacto, int ox);
 
 #endif /* DINO_H_ */

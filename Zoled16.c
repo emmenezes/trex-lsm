@@ -1,5 +1,5 @@
 // Zoled
-// Básico para desenvolvimento
+// BÃ¡sico para desenvolvimento
 
 // P4.1 = SDA e P4.2 = SCL
 
@@ -30,12 +30,15 @@ int main(void){
     espera_10ms(10);
 
     oled_buf_apaga();
+    oled_wr_cmdo(vet_cmdo1,27);
+    oled_wr_cmdo(vet_cmdo2,4);
     oled_buf_vai();
+    espera_10ms(10);
 
     // Tela de inicio
     // Espera botao
 
-    int pulo = 0, ox = 5, oy = 25;
+    int pulo = 0, ox = 10, oy = 25;
     int contador_pulo = 0;
     int velocidade[] = {0, -2, -2, -4, -8, -4, -2, -2};
     int pos_cacto = 125, ha_cacto = 1;
@@ -50,14 +53,18 @@ int main(void){
         if (contador_pulo){
             --contador_pulo;
         }
+
         if (!ha_cacto){
             ha_cacto = 1;
+            pos_cacto = 125;
         }
         if (ha_cacto){
             pos_cacto -= 2;
             printCacto(cacto1, pos_cacto);
-            if (pos_cacto == -9)
+            if (pos_cacto <= 1){
                 ha_cacto--;
+                apagaCacto(cacto1, pos_cacto);
+            }
         }
 
         //printDino(dino1, ox, oy + velocidade[contador_pulo]);

@@ -13,9 +13,9 @@
 void printDino(int* dino, int ox, int oy)
 {
     int addx = 0, addy = 0, valk;
-    for (addx = 0; addx < 24; addx++){
-        for (addy = 0; addy < 22; addy++){
-            valk = dino[addx * 22 + addy];
+    for (addx = 0; addx < 17; addx++){
+        for (addy = 0; addy < 14; addy++){
+            valk = dino[addx * 14 + addy];
             if (valk == 1){
                 oled_pix(addy + ox, addx + oy, PX_ON);
             }
@@ -25,14 +25,23 @@ void printDino(int* dino, int ox, int oy)
 
 void printCacto(int* cacto, int ox){
     int addx = 0, addy = 0, valk;
-    if (ox < 0){
-        addx = -ox;
-    }
     for (addx = 0; addx < 16; addx++){
         for (addy = 0; addy < 9; addy++){
             valk = cacto[addx * 9 + addy];
             if (valk == 1){
                 oled_pix(addy + ox, addx + 25, PX_ON);
+            }
+        }
+    }
+}
+
+void apagaCacto(int* cacto, int ox){
+    int addx = 0, addy = 0, valk;
+    for (addx = 0; addx < 16; addx++){
+        for (addy = 0; addy < 9; addy++){
+            valk = cacto[addx * 9 + addy];
+            if (valk == 1){
+                oled_pix(addy + ox, addx + 25, PX_OFF);
             }
         }
     }
