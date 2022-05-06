@@ -13,6 +13,7 @@
 #include "Timer.h"
 #include "Aleat.h"
 #include "dino.h"
+#include "Oled_Letras.h"
 
 #define FECHADA 0       // SW fechada
 #define ABERTA  1       // SW aberta
@@ -26,7 +27,7 @@ volatile int mediaX=0, mediaY=0;
 volatile float X, Y;
 volatile int movimento = FALSE;     // indica qual movimento o dino deve fazer
 
-volatile char matriz[340];
+unsigned int pont, max_pont = 0;
 
 // FUN��ES
 // configura��es
@@ -37,7 +38,8 @@ void timers_config(void);
 // outras
 int sw_mon(void);
 
-void vai(char x);
+char jogo(void);
+
 
 int main(void){
 
@@ -65,15 +67,32 @@ int main(void){
     // Tela de inicio
     // Espera botao
 
+
+
+    printTelaInicio(dino1, cacto1);
+    while(!sw_mon());
+
+    while(TRUE){
+        pont = 0;
+        while(jogo());
+        if (pont > max_pont)
+            max_pont = pont;
+        printTelaFim(dino1, cacto1, max_pont);
+        while(!sw_mon());
+    }
+
+    return 0;
+}
+
+char jogo(void){
     int ox = 10, oy = 35;
     int contador_pulo = 0;
     int velocidade[] = {0,-2,-4,-6,-8,-10,-12,-14,-15,-16,-17,-18,-19,-19,-20,-20,-20,-20,-19,-19,-18,-17,-16,-15,-14,-12,-10,-8,-6,-4,-2};
     unsigned int pos_cacto = 125, ha_cacto = 1, ocupado;
 
-
-
     while(TRUE){
         oled_buf_apaga();
+        printScore(pont);
         if (movimento == 2 && !contador_pulo) {
             contador_pulo = 31;
         }
@@ -91,11 +110,12 @@ int main(void){
             if (pos_cacto <= 1){
                 ha_cacto--;
                 apagaCacto(cacto1, pos_cacto);
+                pont++;
             }
         }
 
         if (printDino(dino1, ox, oy + velocidade[contador_pulo], ocupado)){
-            while(TRUE);
+            return 0;
         }
         oled_linha(0,45,127,45,PX_ON);
 
@@ -103,8 +123,6 @@ int main(void){
         oled_buf_vai();
         espera_10ms(3);
     }
-
-    return 0;
 }
 
 //_________________________________________________________________________________
