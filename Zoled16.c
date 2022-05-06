@@ -67,8 +67,6 @@ int main(void){
     // Tela de inicio
     // Espera botao
 
-
-
     printTelaInicio(dino1, cacto1);
     while(!sw_mon());
 
@@ -89,6 +87,7 @@ char jogo(void){
     int contador_pulo = 0;
     int velocidade[] = {0,-2,-4,-6,-8,-10,-12,-14,-15,-16,-17,-18,-19,-19,-20,-20,-20,-20,-19,-19,-18,-17,-16,-15,-14,-12,-10,-8,-6,-4,-2};
     unsigned int pos_cacto = 125, ha_cacto = 1, ocupado;
+    int sprite_dino = 0;
 
     while(TRUE){
         oled_buf_apaga();
@@ -114,14 +113,46 @@ char jogo(void){
             }
         }
 
-        if (printDino(dino1, ox, oy + velocidade[contador_pulo], ocupado)){
-            return 0;
+        switch(sprite_dino){
+            case 1:
+                if (printDino(dino1, ox, oy + velocidade[contador_pulo], ocupado)){
+                    return 0;
+                }
+                break;
+            case 2:
+                if (printDino(dino2, ox, oy + velocidade[contador_pulo], ocupado)){
+                    return 0;
+                }
+                break;
+            case 3:
+                if (printDino(dino3, ox, oy + velocidade[contador_pulo], ocupado)){
+                    return 0;
+                }
+                break;
+            case 4:
+                if (printDino(dino4, ox, oy + velocidade[contador_pulo], ocupado)){
+                    return 0;
+                }
+                break;
+            case 5:
+                if (printDino(dino5, ox, oy + velocidade[contador_pulo], ocupado)){
+                    return 0;
+                }
+                break;
+            default:
+                if (printDino(dino0, ox, oy + velocidade[contador_pulo], ocupado)){
+                    return 0;
+                }
+                break;
+
         }
+
         oled_linha(0,45,127,45,PX_ON);
 
 
         oled_buf_vai();
         espera_10ms(3);
+        sprite_dino  = (sprite_dino+1)%6;
     }
 }
 

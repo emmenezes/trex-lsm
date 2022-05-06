@@ -16,8 +16,8 @@ unsigned int printDino(int* dino, int ox, int oy, unsigned int ocupado)
 {
     int addx = 0, addy = 0, valk;
     for (addy = 0; addy < 17; addy++){
-        for (addx = 0; addx < 14; addx++){
-            valk = dino[addy * 14 + addx];
+        for (addx = 0; addx < 15; addx++){
+            valk = dino[addy * 15 + addx];
             if (valk == 1){
                 if (ocupado && oy > 20 ){
                     return 1;
@@ -60,8 +60,8 @@ void printTelaInicio(int* dino, int*cacto){
     oled_buf_apaga();
     int addx = 0, addy = 0, valk;
     for (addy = 0; addy < 17; addy++){
-        for (addx = 0; addx < 14; addx++){
-            valk = dino[addy * 14 + addx];
+        for (addx = 0; addx < 15; addx++){
+            valk = dino[addy * 15 + addx];
             if (valk == 1){
                 oled_pix(addx + 27, addy + 30, PX_ON);
             }
@@ -86,8 +86,8 @@ void printTelaFim(int* dino, int*cacto, unsigned int max_pont){
     oled_buf_apaga();
     int addx = 0, addy = 0, valk;
     for (addy = 0; addy < 17; addy++){
-        for (addx = 0; addx < 14; addx++){
-            valk = dino[addy * 14 + addx];
+        for (addx = 0; addx < 15; addx++){
+            valk = dino[addy * 15 + addx];
             if (valk == 1){
                 oled_pix(addx + 97, addy + 30, PX_ON);
             }
