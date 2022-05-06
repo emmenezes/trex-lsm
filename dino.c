@@ -10,39 +10,56 @@
 #include <Defines.h>
 #include <Oled.h>
 
-void printDino(int* dino, int ox, int oy)
+
+unsigned int printDino(int* dino, int ox, int oy, unsigned int ocupado)
 {
     int addx = 0, addy = 0, valk;
-    for (addx = 0; addx < 17; addx++){
-        for (addy = 0; addy < 14; addy++){
-            valk = dino[addx * 14 + addy];
+    for (addy = 0; addy < 17; addy++){
+        for (addx = 0; addx < 14; addx++){
+            valk = dino[addy * 14 + addx];
             if (valk == 1){
-                oled_pix(addy + ox, addx + oy, PX_ON);
+                if (ocupado && oy > 20 ){
+                    return 1;
+                }
+                oled_pix(addx + ox, addy + oy, PX_ON);
             }
         }
     }
+    return 0;
 }
 
-void printCacto(int* cacto, int ox){
-    int addx = 0, addy = 0, valk;
-    for (addx = 0; addx < 16; addx++){
-        for (addy = 0; addy < 9; addy++){
-            valk = cacto[addx * 9 + addy];
+unsigned int printCacto(int* cacto, int ox){
+    int addx = 0, addy = 0, valk, ocupado = 0;
+    for (addy = 0; addy < 16; addy++){
+        for (addx = 0; addx < 9; addx++){
+            valk = cacto[addy * 9 + addx];
             if (valk == 1){
-                oled_pix(addy + ox, addx + 25, PX_ON);
+                oled_pix(addx + ox, addy + 35, PX_ON);
+                if (ox > 9 && ox < 14)
+                    ocupado = 1;
             }
         }
     }
+    return ocupado;
 }
 
 void apagaCacto(int* cacto, int ox){
     int addx = 0, addy = 0, valk;
-    for (addx = 0; addx < 16; addx++){
-        for (addy = 0; addy < 9; addy++){
-            valk = cacto[addx * 9 + addy];
+    for (addy = 0; addy < 16; addy++){
+        for (addx = 0; addx < 9; addx++){
+            valk = cacto[addy * 9 + addx];
             if (valk == 1){
-                oled_pix(addy + ox, addx + 25, PX_OFF);
+                oled_pix(addx + ox, addy + 35, PX_OFF);
             }
+        }
+    }
+}
+
+void apagaMatriz(volatile char* matriz){
+    char i,j;
+    for (i=0; i<17; i++){
+        for (j=1; j<20; j++){
+            matriz[i*20 + j]=0;
         }
     }
 }
